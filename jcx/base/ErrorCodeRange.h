@@ -1,0 +1,11 @@
+#ifndef  JCX_BASE_ERRORCODERANGE_H
+#define  JCX_BASE_ERRORCODERANGE_H
+
+#define EC_MIN_STORAGE      100
+
+#define EC_MIN_SGE_SVR      2000
+
+#define EC_MIN_LINE_SVR      2100
+
+
+#endif   /* JCX_BASE_ERRORCODERANGE_H */
