@@ -1,6 +1,6 @@
 
-#ifndef  EVENTSUBJECT_H
-#define  EVENTSUBJECT_H
+#ifndef  JCX_BASE_EVENTSUBJECT_H
+#define  JCX_BASE_EVENTSUBJECT_H
 
 #include "ISubject.h"
 
@@ -21,4 +21,4 @@ private:
 }   //namespace base
 }   //namespace jcx
 
-#endif   /* EVENTSUBJECT_H */
+#endif   /* JCX_BASE_EVENTSUBJECT_H */

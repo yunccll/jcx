@@ -30,7 +30,7 @@ PROJ_STATIC_LIBS	=  #static lib names
 PROJ_DYNAMIC_LIBS  	=  #dynamic lib names
 
 #-- customer rules
-PROJ_CXXFLAGS += -g -Wall -Werror -pipe -Wno-shadow -fPIC -std=c++11
+PROJ_CXXFLAGS += -g -Wall -Werror -pipe -Wno-shadow -fPIC -std=c++1z
 #PROJ_CXXFLAGS += -g -w -pipe -Wno-shadow -fPIC -std=c++11
 PROJ_CXXFLAGS += $(addprefix -I, $(PROJ_INC_PATHES)) -I$(PROJ_ROOT_SRC_PATH)
 PROJ_CFLAGS += $(addprefix -I, $(PROJ_INC_PATHES)) -I$(PROJ_ROOT_SRC_PATH) -fPIC

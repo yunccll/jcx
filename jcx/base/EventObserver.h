@@ -1,6 +1,6 @@
 
-#ifndef  EVENTOBSERVER_H
-#define  EVENTOBSERVER_H
+#ifndef  JCX_BASE_EVENTOBSERVER_H
+#define  JCX_BASE_EVENTOBSERVER_H
 
 #include "IObserver.h"
 
@@ -20,4 +20,4 @@ public:
 }   //namespace base
 }   //namespace jcx
 
-#endif   /* EVENTOBSERVER_H */
+#endif   /* JCX_BASE_EVENTOBSERVER_H */

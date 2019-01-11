@@ -1,6 +1,6 @@
 
-#ifndef  EVENT_H
-#define  EVENT_H
+#ifndef  JCX_BASE_EVENT_H
+#define  JCX_BASE_EVENT_H
 
 #include <string>
 
