@@ -1,12 +1,15 @@
 include ../../mk/Makefile.root.include
 include ../../mk/Makefile.libs.include
 
-PROJ_INC_PATHES 	+= $(GTEST_INC_PATH) \
-					$(PROJ_ROOT_SRC_PATH)
-PROJ_LIB_PATHES 	+=
-PROJ_LIB_FULL_NAMES += $(GTEST_LIB_FULL_NAME)
+PROJ_INC_PATHES	+= $(GTEST_INC_PATH)
+PROJ_LIB_PATHES += $(GTEST_LIB_PATH)
+PROJ_LIB_NAMES 	+= $(GTEST_LIB_NAME)
 
-PROJ_STATIC_LIBS 	+= pthread
+PROJ_INC_PATHES += $(PROJ_ROOT_SRC_PATH)/jcx/base
+PROJ_LIB_PATHES += $(PROJ_ROOT_SRC_PATH)/jcx/base
+
+
+PROJ_STATIC_LIBS 	+= jcx_base pthread
 
 UT_DEST_EXCLUDE_OBJS 	+= ../main.o
 CXX_OBJS  				+= $(UT_DEST_OBJS)

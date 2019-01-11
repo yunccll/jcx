@@ -1,10 +1,11 @@
 
 #-- gtest
-GTEST_HOME_PATH		:= $(PROJ_ROOT_SRC_PATH)/third/gtest
-GTEST_INC_PATH	:= $(GTEST_HOME_PATH)/include
-GTEST_LIB_PATH		:= $(GTEST_HOME_PATH)/lib
+GTEST_HOME_PATH		:= $(PROJ_ROOT_SRC_PATH)/third/googletest
+GTEST_INC_PATH	:= $(GTEST_HOME_PATH)/googletest/include
+GTEST_LIB_PATH		:= $(GTEST_HOME_PATH)/build/lib
 GTEST_LIB_NAME		:= gtest
 GTEST_LIB_FULL_NAME	:= $(GTEST_LIB_PATH)/$(GTEST_LIB_NAME).a
+
 
 
 #-- gmock
@@ -13,6 +14,12 @@ GMOCK_INC_PATH	:= $(GMOCK_HOME_PATH)/include
 GMOCK_LIB_PATH		:= $(GMOCK_HOME_PATH)/lib
 GMOCK_LIB_NAME		:= gmock
 GMOCK_LIB_FULL_NAME	:= $(GMOCK_LIB_PATH)/$(GMOCK_LIB_NAME).a
+
+#-- gtest
+RAPIDJSON_HOME_PATH		:= $(PROJ_ROOT_SRC_PATH)/third/rapidjson
+RAPIDJSON_INC_PATH		:= $(RAPIDJSON_HOME_PATH)/include
+
+
 
 #-- grpc && protobuf
 GRPC_HOME_PATH		:= $(PROJ_ROOT_SRC_PATH)/third/grpc

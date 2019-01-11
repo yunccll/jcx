@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include <jcx/base/CrossPlatform.h>
+#include <jcx/base/Crossplatform.h>
 
 #define LOG  std::cout
 
