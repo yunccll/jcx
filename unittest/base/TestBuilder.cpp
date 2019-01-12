@@ -64,8 +64,10 @@ TEST(BuilderPtrTest, use_class){
         delete p;
     }
     {
-        auto p = BuilderTarget::ptrBuilder::make(new _Base());//for BuilderTarget(_Base *)
+        auto b = new _Base();
+        auto p = BuilderTarget::ptrBuilder::make(b);//for BuilderTarget(_Base *) //memory leak
         delete p;
+        delete b;
     }
     {
         auto p = BuilderTarget::ptrBuilder::make(_Base()); //for BuilderTarget(const _Base &)

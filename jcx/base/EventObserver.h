@@ -14,7 +14,7 @@ public:
     EventObserver();
     virtual ~EventObserver();
 
-    virtual void update(const Event * event) ;
+    virtual int update(const Event * event) ;
 };
 
 }   //namespace base
