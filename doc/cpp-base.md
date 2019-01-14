@@ -94,15 +94,15 @@ CPP  base
 
     * complicated
 
-    ```std::vector<int> p;
-    std::vector<int>::iterator it = p.begin();
-    for(; it != p.end(); ++it){
-    } 
+        ```std::vector<int> p;
+        std::vector<int>::iterator it = p.begin();
+        for(; it != p.end(); ++it){
+        } 
 
-    // --> 
-    for( auto it = p.begin(); it != p.end(); ++it){
-    }
-    ```
+        // --> 
+        for( auto it = p.begin(); it != p.end(); ++it){
+        }
+        ```
 
 * shared_ptr
     
@@ -178,10 +178,9 @@ CPP  base
     };
     ```
 
-
 ## OOP
 
-    * Encapsulation
+* Encapsulation
 
     private, public 
 
@@ -209,7 +208,7 @@ CPP  base
     };
     ```
 
-    * Inherit 
+* Inherit 
     protected
 
     ```class Base {
@@ -259,7 +258,7 @@ CPP  base
     delete pBase;
     ```
 
-    * Polymorphic
+* Polymorphic
     virtual 
     TODO: 
 
@@ -270,19 +269,24 @@ CPP  base
 
 ## STL  TODO:
 
-Container : vector, list, deque, queue,  std::map,  std::unordered_map(C++11)
-iterator:   for
-algorithm:  std::find,  std::advance, .....
-function:  
+* Container 
+    vector, list, deque, queue,  std::map,  std::unordered_map(C++11)
+* iterator
+    for
+* algorithm
+    std::find,  std::advance, .....
+* function
+    
 
 ## DP Evolution TODO: 
-    * Observer Pattern Evolution
-        * callback 
-        * listener 
-        * Observer
 
-    * Status Pattern Evolution
-        * if-everywhere
-        * Status-transfer-table
-        * Status
+* Observer Pattern Evolution
+    * callback 
+    * listener 
+    * Observer
+
+* Status Pattern Evolution
+    * if-everywhere
+    * Status-transfer-table
+    * Status
 
