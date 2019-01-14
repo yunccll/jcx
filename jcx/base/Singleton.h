@@ -5,11 +5,11 @@ namespace jcx {
 namespace base {
 
 template <typename T>
-
 class Singleton{
 public:
     Singleton(){}
     virtual ~Singleton(){}
+
     static T * instance(){
         static T t;
         _obj.do_nothing();

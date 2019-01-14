@@ -2,19 +2,43 @@ CPP  base
 
     C++, C++11, C++1z
 
+    C++ 发展许多年，导致特别的臃肿，但是我们只使用其中最基础，最有效，最重要的部分。
+    C++ 组成部分： C++语言特性; 面向对象; 模板(STL); 新增库和语法(C++11,C++1z)；
+
+    最重要的部分：类型系统，面向过程，面向对象，少部分模板技巧, STL, 内存管理部分
+
 
 ## elmentary
 
 * const & non-const
 
     ```const int; 
-    const int * ;
-    const int * const ;
+    const int * ptr ;
+    const int * const  ptr;
     void f(const int *) const ;
     ```
 
 * static 
-    TODO:
+    
+    ```//A.cpp 
+    static int f(){
+        return 0;
+    }
+
+    
+    // global function of A
+    class A {
+    public:
+        static int f(){
+            return 0;
+        }
+    };
+
+    // use static function 
+    typedef int (*pf_t)();
+    pf_t  p_f = &f;
+    pf_t  p_a_f = &A::f;
+    ```
 
 * ptr & Ref 
 
@@ -50,8 +74,7 @@ CPP  base
         public: 
             A(const std::string & name){
                 _name_ref = name;
-                _name_owner = name;
-            }
+                _name_owner = name; }
             ~A();
 
         private:
@@ -59,7 +82,6 @@ CPP  base
             std::string name_owner;
         };
         ```
-
 
 * auto
     * easy 
@@ -75,12 +97,10 @@ CPP  base
     ```std::vector<int> p;
     std::vector<int>::iterator it = p.begin();
     for(; it != p.end(); ++it){
-        ...
     } 
 
     // --> 
     for( auto it = p.begin(); it != p.end(); ++it){
-        ...
     }
     ```
 
@@ -93,21 +113,77 @@ CPP  base
         std::shared_ptr<int> sptr(new int(10)); //memory free 
         std::cout << *sptr << std::endl;
         std::cout << *(sptr->get()) << std::endl;
+
+
+        std::shared_ptr<int> sptr1  = sptr;   // owner sptr --> sptr1
+    }
+    ```
+
+    extend:
+    unique_ptr, weak_ptr
+
+* namespace 
+
+
+    ```//a.h
+    namespace jcx{
+    namespace base {
+
+    class A{
+    public:
+        A();
+        ~A();
+    };
+
+    }  //namespace base
+    }  //namespace jcx
+
+    //a.cpp
+    namespace jcx{
+    namespace base {
+        
+    A::A(){
+    }
+    A::~A(){
+    }
+        
+    }  //namespace base
+    }  //namespace jcx
+  
+    //forward reference  in XXX.h
+    namespace jcx {
+        namespace base {
+            class A;
+        }
     }
     ```
 
 
-* namespace 
-    TODO:
 * initializer for constructor
-    TODO:
+    
+    ```class A {
+    public:
+        A()
+        :_a(0)      // note the order
+        ,_b(0)
+        ,_c(0)
+        {
+        }
+        ~A(){
+        }
+    private:
+        int a;   //Note the order 
+        int b;
+        int c;
+    };
+    ```
+
 
 ## OOP
 
     * Encapsulation
 
     private, public 
-
 
     ```class BaseFinal final {
     public :
@@ -170,11 +246,9 @@ CPP  base
         virtual Sub(){
         }
     };
-    ```
 
-    use it 
-
-    ```Base * pBase = new Base();
+    // use it 
+    Base * pBase = new Base();
     Sub * pSub = new Sub();
 
     Base * pBase1 = pSub;
@@ -189,12 +263,26 @@ CPP  base
     virtual 
     TODO: 
 
-    class Sub{
+    ```class Sub{
     };
+    ```
 
 
-## STL 
+## STL  TODO:
 
-## DP
+Container : vector, list, deque, queue,  std::map,  std::unordered_map(C++11)
+iterator:   for
+algorithm:  std::find,  std::advance, .....
+function:  
 
+## DP Evolution TODO: 
+    * Observer Pattern Evolution
+        * callback 
+        * listener 
+        * Observer
+
+    * Status Pattern Evolution
+        * if-everywhere
+        * Status-transfer-table
+        * Status
 
