@@ -31,23 +31,23 @@ struct FunctorTest{
 };
 TEST(CallerTest, use){
     {
-        Caller0<void> func(&FunctorTest::f0);
+        Caller<void> func(&FunctorTest::f0);
         func();
     }
     {
-        Caller1<int, int> func(&FunctorTest::f1);
+        Caller<int (int)> func(&FunctorTest::f1);
         func(1);
     }
     {
-        Caller2<int, int, int> func(&FunctorTest::f2);
+        Caller<int (int,int)> func(&FunctorTest::f2);
         func(1,2);
     }
-    {
-        Caller3<int, int, int, int> func(&FunctorTest::f3);
+  {
+        Caller<int (int, int, int)> func(&FunctorTest::f3);
         func(1, 2, 3);
     }
-    {
-        Caller4<int, int, int, int, int> func(&FunctorTest::f4);
+   {
+        Caller<int (int, int, int, int)> func(&FunctorTest::f4);
         func(1, 2, 3, 4);
     }
 }

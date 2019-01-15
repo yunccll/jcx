@@ -29,6 +29,7 @@ TEST(RapidjsonTest, use){
     std::cout << buffer.GetString() << std::endl;
 }
 
+/* 
 TEST(RapidjsonTest, useFile){
     //output the stream
     const char* fn = "RapidjsonTest.cfg";
@@ -108,4 +109,4 @@ TEST(RapidjsonTest, useOfstream){
             d.Accept(writer);
         }
     }
-}
+}*/

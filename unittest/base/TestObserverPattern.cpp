@@ -12,7 +12,7 @@ static void f(Event * ev){
     std::cout << "event:" << ev->toString() << std::endl;
 }
 TEST(ObserverTest, callback){
-    Caller1<void, Event*> caller(&f);
+    Caller<void (Event*)> caller(&f);
     {
         auto ev = BuilderPtr<Event>::make(1, (void*)NULL);
         caller(ev);

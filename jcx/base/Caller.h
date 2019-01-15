@@ -6,13 +6,13 @@ namespace jcx {
 namespace base {
 
 template<typename R>
-struct Caller0 final {
+struct Caller{
     typedef R (*f_t)(void);
-    Caller0(f_t f)
+    Caller(f_t f)
     :_f(f)
     {
     }
-    ~Caller0(){
+    ~Caller(){
     }
 
     R operator () (void){
@@ -23,13 +23,13 @@ private:
 };
 
 template<typename R, typename A1>
-struct Caller1 final {
+struct Caller <R (A1)>{
     typedef R (*f_t)(A1);
-    Caller1(f_t f)
+    Caller(f_t f)
     :_f(f)
     {
     }
-    ~Caller1(){
+    ~Caller(){
     }
     R operator () (A1 a1){
         return _f(a1);
@@ -39,13 +39,13 @@ private:
 };
 
 template<typename R, typename A1, typename A2>
-struct Caller2 final {
+struct Caller<R (A1, A2)>{
     typedef R (*f_t)(A1, A2);
-    Caller2(f_t f)
+    Caller(f_t f)
     :_f(f)
     {
     }
-    ~Caller2(){
+    ~Caller(){
     }
     R operator () (A1 a1, A2 a2){
         return _f(a1, a2);
@@ -55,13 +55,13 @@ private:
 };
 
 template<typename R, typename A1, typename A2, typename A3>
-struct Caller3 final {
+struct Caller< R (A1, A2, A3)>{
     typedef R (*f_t)(A1, A2, A3);
-    Caller3(f_t f)
+    Caller(f_t f)
     :_f(f)
     {
     }
-    ~Caller3(){
+    ~Caller(){
     }
     R operator () (A1 a1, A2 a2, A3 a3){
         return _f(a1, a2, a3);
@@ -71,13 +71,13 @@ private:
 };
 
 template<typename R, typename A1, typename A2, typename A3, typename A4>
-struct Caller4 final {
+struct Caller< R (A1, A2, A3, A4)>{
     typedef R (*f_t)(A1, A2, A3, A4);
-    Caller4(f_t f)
+    Caller(f_t f)
     :_f(f)
     {
     }
-    ~Caller4(){
+    ~Caller(){
     }
     R operator () (A1 a1, A2 a2, A3 a3, A4 a4){
         return _f(a1, a2, a3, a4);
