@@ -32,7 +32,7 @@ public:
     _Sub(int id = 0);
     ~_Sub();
 
-    virtual void f();
+    void f() override;
 private:
     int _id;
 };

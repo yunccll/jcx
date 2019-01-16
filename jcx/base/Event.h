@@ -7,6 +7,7 @@
 namespace jcx {
 namespace base {
 
+
 class Event  {
 public:
     Event(const int id, void * arg);

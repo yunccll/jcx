@@ -12,9 +12,9 @@ class Event;
 class EventObserver : public IObserver {
 public:
     EventObserver();
-    virtual ~EventObserver();
+    ~EventObserver() override;
 
-    virtual int update(const Event * event) ;
+    int update(const Event * event) override;
 };
 
 }   //namespace base

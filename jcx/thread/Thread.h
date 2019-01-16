@@ -22,8 +22,8 @@ public:
     static std::shared_ptr<Thread> make(std::shared_ptr<base::IRunnable> spr);
 
     Thread(base::IRunnable * r = 0);
-    virtual ~Thread();
-    virtual void run();
+    ~Thread() override;
+    void run() override;
 
 
     int detach();
@@ -43,7 +43,7 @@ public:
 private:
     static void * ThreadEntry(void * ctx);
 private:
-    pthread_t _thread;
+    pthread_t _thread;  //TODO: move to Imp;
     base::IRunnable * _runnable;
 };
 

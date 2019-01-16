@@ -20,17 +20,16 @@ public:
     virtual int attach(IObserver * observer) = 0;
     virtual int detach(IObserver * observer) = 0 ;
     virtual int notify(const Event * event) = 0;
-
 };
 
 
 class AbstractSubject : public ISubject {
 public:
-    virtual ~AbstractSubject();
+    ~AbstractSubject() override;
 
-    virtual int attach(IObserver * observer);
-    virtual int detach(IObserver * observer);
-    virtual int notify(const Event * event);
+    int attach(IObserver * observer) override;
+    int detach(IObserver * observer) override;
+    int notify(const Event * event) override;
 
 private:
     std::list<IObserver*> _observers;

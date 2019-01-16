@@ -1,11 +1,39 @@
-CPP  base 
+CPP  base  training
 
-    C++, C++11, C++1z
+    C++ 发展了许多年，特别的臃肿。
+    组成部分有： 语言特性; 面向对象; 泛型编程; 库(STL), 新增加的库和语法(C++11,C++1z)。
 
-    C++ 发展许多年，导致特别的臃肿，但是我们只使用其中最基础，最有效，最重要的部分。
-    C++ 组成部分： C++语言特性; 面向对象; 模板(STL); 新增库和语法(C++11,C++1z)；
+    综合考虑，我们项目里面只使用其中最基础，最有效，最重要的部分；
+    特别注意：禁止炫技代码在工作代码中出现。
 
-    最重要的部分：类型系统，面向过程，面向对象，少部分模板技巧, STL, 内存管理部分
+    最重要的部分：类型系统，面向过程，面向对象，少部分模板技巧&STL, 内存管理部分
+
+
+## ref book
+    <c++ primer plus> 基础语法
+    <effective C++>  工程实践
+    <Generic Programming and the STL> 泛型编程概念和ＳＴＬ分析
+    <www.boost.org>  C++11, C++1z 新lib
+
+    书很多，除了用于入门的可以先看看，还是靠写码先多实践了再说。
+
+
+## 与C的最大区别
+* base
+    * 强类型
+    * 面向对象 (OOP)
+    * 泛型编程 (GP)
+
+* standard library
+    * 常用数据结构      (container, string...)
+    * base io
+    * 与之配套的算法    (sort, find, ....)
+    * 语言特性补充
+        MM, Functor, lambda
+
+* non-standard library
+    * 功能扩充 (boost)
+    network, filesystem, datetime,
 
 
 ## elmentary
@@ -13,9 +41,15 @@ CPP  base
 * const & non-const
 
     ```const int; 
-    const int * ptr ;
+    const int * ptr ;  //这个用的很多
     const int * const  ptr;
-    void f(const int *) const ;
+
+
+    class A {
+        void f(const int *) const ;
+        void f(const int *);
+    }
+
     ```
 
 * static 
@@ -83,8 +117,8 @@ CPP  base
         };
         ```
 
-* auto
-    * easy 
+* auto  类型推演
+    * 1
 
         ```int a = 100;
         int b = a; 
@@ -92,7 +126,7 @@ CPP  base
         auto b = a; type(a)--> type(b)
         ```
 
-    * complicated
+    * 2
 
         ```std::vector<int> p;
         std::vector<int>::iterator it = p.begin();

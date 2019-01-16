@@ -20,6 +20,7 @@ public:
         }
         return NULL; 
     }
+
     Error() : _code(0), _msg(""), _ctx(NULL) {}
     Error(int code) : _code(code), _msg(_errorMap.getMsg(code)), _ctx(NULL){}
     Error(int code, const Slice & ctx): _code(code),_msg(_errorMap.getMsg(code)){
@@ -30,7 +31,7 @@ public:
         _msg = err._msg;
         _ctx = copyContext(err._ctx, (err._ctx == NULL) ? 0 : strlen(err._ctx));
     }
-    ~Error(){
+    virtual ~Error(){
         if(_ctx == NULL) delete _ctx;
     }
 

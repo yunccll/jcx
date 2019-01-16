@@ -11,10 +11,9 @@ class Event;
 class EventSubject : public AbstractSubject {
 public:
     EventSubject();
-    virtual ~EventSubject();
+    ~EventSubject() override;
     
     virtual int emit(const Event * event);
-
 private:
 };
 
