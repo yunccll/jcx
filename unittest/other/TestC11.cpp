@@ -40,6 +40,7 @@ public:
     */
     typedef typename SrcType::iterator iterator;
     Reader(SrcType &src):_src(src){
+
     }
     ~Reader(){
     }
@@ -82,4 +83,50 @@ TEST(C11Test, useCustomFor){
             cout << *b <<endl;
         }
     }
+}
+
+
+/*user: 
+*     std::string str("1000");
+*     f_0(str);
+*/
+void f_0(std::string & str){
+    std::cout << str << std::endl;
+}
+
+/*user: 
+*     f_1("100");
+*     std::string str("1000");
+*     f_1(str);
+*/
+void f_1(const std::string & str){
+    //ERROR:  str = "1000";
+    std::cout << str << std::endl;
+}
+
+/*user: 
+*     f_1("100");
+*     std::string str("1000");
+*     f_1(str);
+*/
+void f_2(std::string && str){
+    str = "1000"; //Note  
+    std::cout << str << std::endl;
+}
+
+TEST(C11Test, rightRef){
+  
+    std::string str("000");
+    f_0(str);
+    // f_0("100"); //complie ERROR
+
+    f_1("100");
+    f_1(str);
+
+    f_2(str);
+    f_2("100");
+
+
+    std::string && str("200");
+    std::cout << str  <<std::endl;
 }
