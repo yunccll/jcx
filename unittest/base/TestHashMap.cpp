@@ -15,8 +15,7 @@ TEST(HashMap, test){
     ASSERT_TRUE(hash->size() == 1);
 
     hash->remove(1);
-    ASSERT_TRUE(hash->size() == 0);
-
+    ASSERT_TRUE(hash->size() == 0); 
     hash->insert(1, 1);
     hash->insert(2, 1);
     ASSERT_TRUE(hash->size() == 2);
@@ -83,3 +82,43 @@ TEST(HashMap, interface){
     delete hash;
 }
 
+
+/*  
+ *  TODO:  refactor to easy use [Note: don't use the template heavily]
+TEST(HashMapPtr, ptr){
+    {
+        auto hash = new HashMap<int>();
+        
+        hash->insert("string", 1);
+        hash->get("string");
+        hash->set("string", 2);
+        hash->size();
+        hash->remove("string");
+
+        hash->visit([](....));
+        it = has->getIterator();
+        for(it->hasNext()){
+            it->next();
+        }
+
+        hash->visit(caller<bool,int*> cb);
+    }
+
+    {
+        auto hash = new HashMapPtr<int>();
+
+        hash->insert("string", new int(1));
+        hash->get("string");
+        hash->set("string", new int(3))
+        hash->size();
+        hash->remove("string");
+
+        auto it = hash->iterator();
+        while(it->hashNext()){
+            it->next<int>();
+        }
+
+        hash->visit(caller<bool,int*> cb);
+    }
+}
+*/
