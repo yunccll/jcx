@@ -23,7 +23,15 @@ public:
     virtual unsigned long size() const = 0;
     virtual bool contains(const K & k) const = 0;
 
-    virtual const V& get(const K & k) const = 0;
+    bool getValue(const K & k, V & v){
+        //return contains(k) ? (v = get(k), true) : false;
+        if(contains(k)){
+            v = get(k);
+            return true;
+        }
+        return false;
+    }
+    virtual V& get(const K & k) = 0;
     virtual bool set(const K & k, const V & v) = 0;
     virtual V& getRef(const K & k)  = 0 ;
 };
@@ -34,9 +42,9 @@ template<typename K, typename V>
 class HashMap :  public IMap<K, V>{
 public:
     HashMap(){}
-    virtual ~HashMap(){}
+    ~HashMap() override {}
 
-    virtual int insert(const K & k,  const V & v){
+    int insert(const K & k,  const V & v) override {
         auto it = _imp.find(k);
         if(it == _imp.end()){
             _imp.insert(std::make_pair(k, v));
@@ -45,35 +53,31 @@ public:
         return -1;
     }
 
-    virtual bool insertOrReplace(const K & k, const V & v){
+    bool insertOrReplace(const K & k, const V & v) override {
         auto p = _imp.insert_or_assign(k, v);
         return p.second;
     }
-    virtual void remove(const K & k){
+    void remove(const K & k) override {
         _imp.erase(k);
     }
-    virtual void clear(){
+    void clear() override {
         _imp.clear();
     }
 
-    virtual unsigned long size() const{
+    unsigned long size() const override{
         return _imp.size();
     }
 
-    virtual bool contains(const K & k) const{
+    bool contains(const K & k) const override{
         return _imp.find(k) != _imp.end();
     }
 
-    virtual bool set(const K & k, const V & v){
+    bool set(const K & k, const V & v) override {
         auto p = _imp.insert_or_assign(k, v);
         return p.second;
     }
 
-    bool getValue(const K & k, V & v) const {
-        return contains(k) ? (v = get(k), true) : false;
-    }
-
-    virtual const V& get(const K & k) const {
+    V& get(const K & k) override{
         return _imp.at(k); // throw exeception if k not in imp
     }
 
@@ -84,19 +88,18 @@ public:
         assert(true == hash->contains("no_exist_key"));
 
      * */
-    virtual V& getRef(const K & k) {
+    V& getRef(const K & k) override{
         return _imp[k];
     }
 
 private:
-    //TODO: How to move the Imp into cpp
     typedef typename std::unordered_map<K,V> HashMapImp;
     HashMapImp _imp;
 };
 
 
-typedef HashMap<const char *, void *> HashMapForPtr;
-typedef IMap<const char *, void *> IHashMapForPtr;
+template<typename T> using HashMapForPtr = HashMap<std::string, T*>;
+template<typename T> using IMapForPtr = IMap<std::string, T*>;
 
 }   //namespace base
 }   //namespace jcx

@@ -16,6 +16,8 @@ public:
     make(){
         return new T();
     }
+
+    /*
     template <typename Arg1>
     static T * 
     make(Arg1 & arg1){
@@ -44,7 +46,7 @@ public:
     make(Arg1 & arg1, Arg2 & arg2, Arg3 & arg3
         , Arg4 & arg4, Arg5 & arg5){
         return new T(arg1, arg2, arg3, arg4, arg5);
-    }
+    }*/
 
 
     //for const ref type
@@ -88,6 +90,8 @@ public:
     make(){
         return std::make_shared<T>();
     }
+
+    /* 
     template <typename Arg1>
     static std::shared_ptr<T>
     make(Arg1 & arg1){
@@ -116,7 +120,7 @@ public:
     make(Arg1 & arg1, Arg2 & arg2, Arg3 & arg3
         , Arg4 & arg4, Arg5 & arg5){
         return std::make_shared<T>(arg1, arg2, arg3, arg4, arg5);
-    }
+    }*/
 
 
     //for const ref type
@@ -159,6 +163,7 @@ public:
         return std::make_shared<T>();
     }
 
+    /* 
     //for sptr
     template <typename Arg1>
     static std::shared_ptr<T> 
@@ -199,7 +204,7 @@ public:
         , std::shared_ptr<Arg5> & arg5){
         return std::make_shared<T>(arg1.get(), arg2.get()
             , arg3.get(), arg4.get(), arg5.get());
-    }
+    }*/
 
     //for const sptr
     template <typename Arg1>

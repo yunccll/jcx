@@ -104,16 +104,6 @@ void f_1(const std::string & str){
     std::cout << str << std::endl;
 }
 
-/*user: 
-*     f_1("100");
-*     std::string str("1000");
-*     f_1(str);
-*/
-void f_2(std::string && str){
-    str = "1000"; //Note  
-    std::cout << str << std::endl;
-}
-
 TEST(C11Test, rightRef){
   
     std::string str("000");
@@ -123,10 +113,5 @@ TEST(C11Test, rightRef){
     f_1("100");
     f_1(str);
 
-    f_2(str);
-    f_2("100");
-
-
-    std::string && str("200");
     std::cout << str  <<std::endl;
 }

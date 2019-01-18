@@ -40,7 +40,7 @@ TEST(HashMap, test_str){
 TEST(HashMap, test_ptr){
 
     char * ptr = NULL;
-    auto hash = new HashMapForPtr();
+    auto hash = new HashMapForPtr<void>();
 
 
     hash->insert("hello", ptr);
@@ -68,7 +68,7 @@ TEST(HashMap, test_ptr){
 }
 
 TEST(HashMap, interface){
-    IMap<const char * , void *>  * hash = new HashMapForPtr();
+    IMapForPtr<void>  * hash = new HashMapForPtr<void>();
     hash->insert("hello", NULL);
 
     if(hash->contains("hello")){
@@ -79,46 +79,21 @@ TEST(HashMap, interface){
     hash->getRef("hhhh"); //Note: ????
     ASSERT_TRUE(true == hash->contains("hhhh"));
 
+
+    char * name  = new char[10] ;
+    memset(name, 0, 10);
+    strncpy(name, "chenglun", 10);
+    ASSERT_TRUE(strcmp(name, "chenglun") == 0);
+
+    hash->insert(name, NULL);
+
+    ASSERT_TRUE(hash->contains(name));
+    ASSERT_TRUE(hash->contains("chenglun"));
+    delete [] name;
+
+    ASSERT_TRUE(hash->contains("chenglun"));
+    ASSERT_TRUE(NULL == hash->get("chenglun"));
+
     delete hash;
 }
 
-
-/*  
- *  TODO:  refactor to easy use [Note: don't use the template heavily]
-TEST(HashMapPtr, ptr){
-    {
-        auto hash = new HashMap<int>();
-        
-        hash->insert("string", 1);
-        hash->get("string");
-        hash->set("string", 2);
-        hash->size();
-        hash->remove("string");
-
-        hash->visit([](....));
-        it = has->getIterator();
-        for(it->hasNext()){
-            it->next();
-        }
-
-        hash->visit(caller<bool,int*> cb);
-    }
-
-    {
-        auto hash = new HashMapPtr<int>();
-
-        hash->insert("string", new int(1));
-        hash->get("string");
-        hash->set("string", new int(3))
-        hash->size();
-        hash->remove("string");
-
-        auto it = hash->iterator();
-        while(it->hashNext()){
-            it->next<int>();
-        }
-
-        hash->visit(caller<bool,int*> cb);
-    }
-}
-*/

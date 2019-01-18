@@ -4,6 +4,11 @@
 #include <sstream>
 #include <jcx/thread/Thread.h>
 #include <jcx/base/Singleton.h>
+#include <algorithm>
+#include <vector>
+#include <jcx/base/HashMap.h>
+#include <jcx/base/Builder.h>
+
 
 class IPluginable{
 public:
@@ -14,7 +19,9 @@ public:
     T * as(){
         return dynamic_cast<T*>(this);
     }
+    static IPluginable Null;
 };
+IPluginable IPluginable::Null;
 
 
 class IMessageListener {
@@ -22,8 +29,10 @@ public:
     virtual ~IMessageListener(){
     }
 
-    virtual int send(const char * data, int len) = 0;
-virtual int recv(const char * data, int len) = 0;
+    //after send msg
+    virtual int send(int errCode, const char * data, int len) = 0;
+    //after recv msg
+    virtual int recv(int errCode, const char * data, int len) = 0;
 };
 
 class IConnectionListener {
@@ -60,45 +69,130 @@ public:
     virtual void stop() = 0;
 };
 
+
+template<typename T>
+class Listeners {
+public:
+    typedef std::vector<T> ListenerContainer;
+
+    Listeners(){}
+    virtual ~Listeners(){}
+
+    int insert(const T & t){
+        _listeners.push_back(t);
+        return 0;
+    }
+
+    void remove(const T & t){
+        auto it = std::find(_listeners.begin(), _listeners.end(), t);
+        if(it != _listeners.end()){
+            _listeners.erase(it);
+        }
+    }
+    void clear(){
+        _listeners.clear();
+    }
+    unsigned long long size() const {
+        return _listeners.size();
+    }
+
+    /* 
+    //TODO: return value ????
+    int visit(Caller<bool (T*)> cb){
+        auto it  = _listeners.begin();
+        for(; it != _listeners.end(); ++it){
+            if(false == cb(*it)){
+                return -1;
+            }
+        }
+        return 0;
+    }*/
+
+    class Iterator {
+    public:
+        Iterator(ListenerContainer& container)
+        : _it(container.begin())
+        , _container(container)
+        {
+        }
+        bool hasNext(){
+            return _it != _container.end();
+        }
+        typename ListenerContainer::value_type next(){
+            auto tmp = *_it;
+            ++_it;
+            return tmp;
+        }
+    private:
+        typename ListenerContainer::iterator _it;
+        ListenerContainer& _container;
+    };
+
+    Iterator iterator(){
+        return Iterator(_listeners);
+    }
+        
+private:
+    ListenerContainer _listeners;
+};
+
 class AbstractApi : public IApi {
 public:
-    AbstractApi()
-    :_started(false){
+    AbstractApi(){
     }
     ~AbstractApi() override{
     }
     int addMessageListener(IMessageListener * msgListener) override{
-        return 0;
+        if(msgListener != NULL)
+            return _msgLisenters.insert(msgListener);
+        return -1;
     }
     void removeMessageListener(IMessageListener * msgListener) override {
+        _msgLisenters.remove(msgListener);
     }
     void clearMessageListener() override {
+        _msgLisenters.clear();
     }
 
     int addConnectionListener(IConnectionListener * connListener) override {
-        return 0;
+        if(connListener != NULL)
+            return _connListeners.insert(connListener);
+        return -1;
     }
     void removeConnectionListener(IConnectionListener * connListener) override {
+        _connListeners.remove(connListener);
     }
     void clearConnectionListener() override {
+        _connListeners.clear();
     }
 
     void clearListener() override {
+        clearMessageListener();
+        clearConnectionListener();
     }
 
-    int send(const char * data, int len) override {
-        return 0;
+
+    int send(const char * msg, int len) override{
+        int ret = sendImp(msg, len);
+
+        notifyMsgListener(ret, msg, len);
+        return ret;
     }
 
-    int start() override {
-        _started = true;
-        return 0;
+private:
+    void notifyMsgListener(int errCode, const char * msg, int len){
+        auto it = _msgLisenters.iterator();
+        while(it.hasNext()){
+            it.next()->send(errCode, msg, len);
+        }
     }
-    void stop() override {
-        _started = false;
-    }
+   
 protected:
-    volatile bool _started;    
+    virtual int sendImp(const char * msg, int len) = 0;
+
+protected:
+    Listeners<IMessageListener*> _msgLisenters;
+    Listeners<IConnectionListener*> _connListeners;
 };
 
 
@@ -107,35 +201,69 @@ void wait(int sec){
 }
 
 
+// --------------------------------------------------------------------
+class GtpApi : public AbstractApi{
+public:
+    ~GtpApi() override {
+    }
+    int start() override {
+        return 0;
+    }
+    void stop() override {
+    }
+
+    int sendImp(const char * msg, int len) override {
+        return 0;
+    }
+};
+
 class PluginManager : public jcx::base::Singleton<PluginManager> {
 public:
     PluginManager(){
-        _plugin = new AbstractApi();
     }
     ~PluginManager() override {
     }
-    IPluginable & findRef(const char * pluginName){
-        return  *_plugin;
+    IPluginable * find(const char * name){
+        if(name != NULL)
+            return  _plugins.get(name);
+        return &IPluginable::Null;
     }
 
-    void add(IPluginable * plugin){
-        //TODO: 
+    IPluginable & findRef(const char * name){
+        if(name != NULL)
+            return *(_plugins.get(name));
+         return IPluginable::Null;
     }
-    void remove(IPluginable * plugin){
-        //TODO: 
+
+    int add(const char * name, IPluginable * plugin){
+        if(name != NULL){
+            return _plugins.insertOrReplace(name, plugin);
+        }
+        return -1;
+    }
+    void remove(const char * name){
+        if(name != NULL){
+            _plugins.remove(name);
+        }
     }
 
 private:
-    IPluginable * _plugin;
+    jcx::base::HashMapForPtr<IPluginable> _plugins;
 };
 
-// --------------------------------------------------------------------
-class GtpApi : public AbstractApi {
-public:
-};
+
+
+
 
 TEST(PluginTest, api){
-    IApi* api = PluginManager::instance()->findRef("api").as<IApi>();
+    auto gtpapi = jcx::base::BuilderSptr<GtpApi>::make();
+    PluginManager::instance()->add("api", gtpapi.get());
+
+
+
+
+    //use 
+    IApi* api = PluginManager::instance()->find("api")->as<IApi>();
     ASSERT_TRUE(api != NULL);
 
     api->addMessageListener(NULL);
@@ -148,11 +276,10 @@ TEST(PluginTest, api){
         api->send(hello, strlen(hello));
     }
 
-    wait(1);
-
     api->stop();
 
     api->clearListener();
+
 }
 
 

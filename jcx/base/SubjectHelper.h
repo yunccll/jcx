@@ -10,6 +10,7 @@ namespace base {
 
 class SubjectHelper {
 public:
+    // L --> use L* or L ?????
     template<typename L, typename T>
     class One {
     public:
@@ -38,6 +39,7 @@ public:
         L * _l;
     };
     
+    //TODO: L --> use L* or L??????
     template<typename L, typename T>
     class Many {
     public:
@@ -57,16 +59,40 @@ public:
             return static_cast<T&>(*this);
         }
 
-        typedef typename std::list<L*> container;
-        typename container::iterator begin(){
-            return _ls.begin();
+        //  C::value_type ; C::iterator; ++it; *it
+        template<typename C>
+        class Iterator {
+        public:
+            Iterator(const typename C::iterator & begin, const typename C::iterator & end)
+            : _it(begin)
+            , _end(end)
+            {
+            }
+            virtual ~Iterator(){
+            }
+
+            bool hasNext() {
+                return _it != _end;
+            }
+            
+            typename C::value_type next(){
+                typename C::value_type  v = *_it;
+                ++_it;
+                return v;
+            }
+
+        private:
+            typename C::iterator _it;
+            const typename C::iterator _end;
+        };
+
+        typedef typename std::list<L *> Container;
+        Iterator<Container> iterator(){
+            return Iterator<Container>(_ls.begin(), _ls.end());
         }
-        typename container::iterator end(){
-            return _ls.end();
-        }
-        
+
     private:
-        container _ls;
+        Container _ls;
     };
 };
 

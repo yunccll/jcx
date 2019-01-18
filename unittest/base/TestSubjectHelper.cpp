@@ -89,16 +89,18 @@ public:
     }
 
     int connected(int errcode){
-        auto it = begin();
-        for(; it != end(); ++it){
-            (*it)->connected(errcode);
+        auto it = iterator();
+        while(it.hasNext()){
+            it.next()->connected(errcode);
+            //it.next();
         }
         return 0;
     }
     int disconnected(int errcode){
-        auto it = begin();
-        for(; it != end(); ++it){
-            (*it)->disconnected(errcode);
+        auto it = iterator();
+        while(it.hasNext()){
+            it.next()->disconnected(errcode);
+            //it.next();
         }
         return 0;
     }

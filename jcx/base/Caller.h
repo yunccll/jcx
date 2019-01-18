@@ -5,10 +5,13 @@
 namespace jcx {
 namespace base {
 
+
+//TODO:  A1  A2 A3 type ==> const A1 & ?????
+
 template<typename R>
 struct Caller{
     typedef R (*f_t)(void);
-    Caller(f_t f)
+    Caller(const f_t & f)
     :_f(f)
     {
     }
@@ -25,7 +28,7 @@ private:
 template<typename R, typename A1>
 struct Caller <R (A1)>{
     typedef R (*f_t)(A1);
-    Caller(f_t f)
+    Caller(const f_t & f)
     :_f(f)
     {
     }
@@ -41,7 +44,7 @@ private:
 template<typename R, typename A1, typename A2>
 struct Caller<R (A1, A2)>{
     typedef R (*f_t)(A1, A2);
-    Caller(f_t f)
+    Caller(const f_t & f)
     :_f(f)
     {
     }
@@ -57,7 +60,7 @@ private:
 template<typename R, typename A1, typename A2, typename A3>
 struct Caller< R (A1, A2, A3)>{
     typedef R (*f_t)(A1, A2, A3);
-    Caller(f_t f)
+    Caller(const f_t & f)
     :_f(f)
     {
     }
@@ -73,7 +76,7 @@ private:
 template<typename R, typename A1, typename A2, typename A3, typename A4>
 struct Caller< R (A1, A2, A3, A4)>{
     typedef R (*f_t)(A1, A2, A3, A4);
-    Caller(f_t f)
+    Caller(const f_t & f)
     :_f(f)
     {
     }

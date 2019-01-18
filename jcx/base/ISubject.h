@@ -17,6 +17,7 @@ class ISubject {
 public:
     virtual ~ISubject(){}
 
+    //TODO: const ???
     virtual int attach(IObserver * observer) = 0;
     virtual int detach(IObserver * observer) = 0 ;
     virtual int notify(const Event * event) = 0;
