@@ -8,11 +8,10 @@ PROJ_INC_PATHES 		+= $(GTEST_INC_PATH) \
 							$(PROJ_ROOT_SRC_PATH)
 
 PROJ_LIB_PATHES 		+= $(PROJ_ROOT_SRC_PATH)/jcx/base 
-PROJ_LIB_PATHES 		+= $(PROJ_ROOT_SRC_PATH)/jcx/logger
 
 PROJ_LIB_FULL_NAMES 	+= $(GTEST_LIB_FULL_NAME)
 
-PROJ_STATIC_LIBS 	+= pthread jcx_base jcx_logger
+PROJ_STATIC_LIBS 	+= pthread jcx_base
 
 
 all: $(TARGET_STATIC_LIB_BIN)

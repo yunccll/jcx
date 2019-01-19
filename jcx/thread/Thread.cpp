@@ -30,7 +30,6 @@ Thread::~Thread(){
 void * Thread::__ThreadEntry(void * ctx){
     Thread * thread = static_cast<Thread*>(ctx);
     if(thread == NULL){
-        LOG_ERROR("thread ptr cast from ctx is NULL\n");
         return NULL;
     }
     thread->run();
@@ -38,22 +37,13 @@ void * Thread::__ThreadEntry(void * ctx){
 }
 
 int Thread::detach(){
-    int ret = _imp->detach();
-    if(ret != 0)
-        LOG_ERROR("thread join failed:[%d]\n", ret);
-    return ret;
+    return _imp->detach();
 }
 int Thread::start(){
-    int ret = _imp->entry(Thread::__ThreadEntry).create(this);
-    if(ret != 0)
-        LOG_ERROR("thread create failed:[%d]\n", ret);
-    return ret;
+    return _imp->entry(Thread::__ThreadEntry).create(this);
 }
 int Thread::wait(){
-    int ret = _imp->join();
-    if(ret != 0)
-        LOG_ERROR("thread join failed:[%d]\n", ret);
-    return ret;
+    return _imp->join();
 }
 
 Thread::ThreadIdType Thread::id(){
