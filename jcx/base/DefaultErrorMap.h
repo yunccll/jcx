@@ -2,6 +2,7 @@
 #ifndef  JCX_BASE_DEFAULTERRORMAP_H
 #define  JCX_BASE_DEFAULTERRORMAP_H
 
+#include <jcx/base/Macro.h>
 #include <jcx/base/IErrorMap.h>
 
 namespace jcx {
@@ -22,6 +23,8 @@ public:
     }
     virtual ~DefaultErrorMap(){
     }
+private:
+    JCX_NO_COPY_CTORS(DefaultErrorMap);
 };
 
 }   //namespace base

@@ -4,6 +4,8 @@
 #include <string>
 #include <memory>
 
+#include <jcx/base/Macro.h>
+
 namespace jcx { 
 namespace base {
 
@@ -27,7 +29,9 @@ public:
     const char * getPath(){ return _path.c_str();}
 
 private: 
+    JCX_NO_COPY_CTORS(File);
     std::string _path;
+
 };
 
 }  //namespace base

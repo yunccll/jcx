@@ -2,11 +2,10 @@
 #ifndef  JCX_BASE_CALLER_H
 #define  JCX_BASE_CALLER_H
 
+#include <jcx/base/Macro.h>
+
 namespace jcx {
 namespace base {
-
-
-//TODO:  A1  A2 A3 type ==> const A1 & ?????
 
 template<typename R>
 struct Caller{
@@ -22,6 +21,7 @@ struct Caller{
         return _f();
     }
 private:
+    JCX_NO_DEFAULT_CTORS(Caller);
     f_t _f;
 };
 
@@ -34,10 +34,11 @@ struct Caller <R (A1)>{
     }
     ~Caller(){
     }
-    R operator () (A1 a1){
+    R operator () (const A1 & a1){
         return _f(a1);
     }
 private:
+    JCX_NO_DEFAULT_CTORS(Caller);
     f_t _f;
 };
 
@@ -50,10 +51,11 @@ struct Caller<R (A1, A2)>{
     }
     ~Caller(){
     }
-    R operator () (A1 a1, A2 a2){
+    R operator () (const A1 & a1, const A2 & a2){
         return _f(a1, a2);
     }
 private:
+    JCX_NO_DEFAULT_CTORS(Caller);
     f_t _f;
 };
 
@@ -66,10 +68,11 @@ struct Caller< R (A1, A2, A3)>{
     }
     ~Caller(){
     }
-    R operator () (A1 a1, A2 a2, A3 a3){
+    R operator () (const A1 & a1, const A2 & a2, const A3 & a3){
         return _f(a1, a2, a3);
     }
 private:
+    JCX_NO_DEFAULT_CTORS(Caller);
     f_t _f;
 };
 
@@ -82,10 +85,11 @@ struct Caller< R (A1, A2, A3, A4)>{
     }
     ~Caller(){
     }
-    R operator () (A1 a1, A2 a2, A3 a3, A4 a4){
+    R operator () (const A1 & a1, const A2 & a2, const A3 & a3, const A4 & a4){
         return _f(a1, a2, a3, a4);
     }
 private:
+    JCX_NO_DEFAULT_CTORS(Caller);
     f_t _f;
 };
 

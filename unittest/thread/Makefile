@@ -25,3 +25,6 @@ clean:
 
 clean.log:
 	$(DO_CLEAN_LOG)	
+
+ut:$(UT_TARGET_BIN)
+	./$(UT_TARGET_BIN)

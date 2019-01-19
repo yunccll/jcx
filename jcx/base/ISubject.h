@@ -3,9 +3,8 @@
 #define  ISUBJECT_H
 
 #include <list>
-#include"IObserver.h"
-
-#include <cstdio>
+#include <jcx/base/Macro.h>
+#include <jcx/base/IObserver.h>
 
 namespace jcx {
 namespace base {
@@ -15,17 +14,20 @@ class Event;
 class ISubject {
 
 public:
+    ISubject(){}
     virtual ~ISubject(){}
 
-    //TODO: const ???
     virtual int attach(IObserver * observer) = 0;
     virtual int detach(IObserver * observer) = 0 ;
     virtual int notify(const Event * event) = 0;
+private:
+    JCX_NO_COPY_CTORS(ISubject); 
 };
 
 
 class AbstractSubject : public ISubject {
 public:
+    AbstractSubject();
     ~AbstractSubject() override;
 
     int attach(IObserver * observer) override;
@@ -33,7 +35,9 @@ public:
     int notify(const Event * event) override;
 
 private:
-    std::list<IObserver*> _observers;
+    JCX_NO_COPY_CTORS(AbstractSubject); 
+    typedef typename std::list<IObserver*> Container;
+    Container _observers;
 };
 
 }   //namespace base

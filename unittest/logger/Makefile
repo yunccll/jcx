@@ -20,8 +20,11 @@ all: $(UT_TARGET_BIN)
 $(UT_TARGET_BIN): $(OBJS)
 	$(DO_CPP_TARGET)
 
-clean:
+clean: clean.log
 	$(DO_UT_CLEAN)
 
 clean.log:
 	$(DO_CLEAN_LOG)	
+
+ut:$(UT_TARGET_BIN)
+	./$(UT_TARGET_BIN)

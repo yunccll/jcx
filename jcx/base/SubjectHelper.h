@@ -3,6 +3,7 @@
 #define  JCX_BASE_SUBJECTHELPER_H
 
 #include <list>
+#include <jcx/base/Macro.h>
 
 namespace jcx {
 namespace base {
@@ -10,11 +11,13 @@ namespace base {
 
 class SubjectHelper {
 public:
-    // L --> use L* or L ?????
     template<typename L, typename T>
     class One {
     public:
-        One(L* l)
+        One()
+        :_l(NULL){
+        }
+        One(L * l)
         :_l(l){
         }
         virtual ~One(){
@@ -34,15 +37,17 @@ public:
             _l = NULL;
             return static_cast<T&>(*this);
         }
-        
+
+    private:
+        JCX_NO_COPY_CTORS(One);
     private:
         L * _l;
     };
     
-    //TODO: L --> use L* or L??????
     template<typename L, typename T>
     class Many {
     public:
+        Many(){}
         virtual ~Many(){
         }
 
@@ -91,6 +96,8 @@ public:
             return Iterator<Container>(_ls.begin(), _ls.end());
         }
 
+    private:
+        JCX_NO_COPY_CTORS(Many);
     private:
         Container _ls;
     };

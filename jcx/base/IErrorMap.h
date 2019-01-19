@@ -39,8 +39,8 @@ protected:
     }
 
 private:
-    std::vector<error> _errors;
     JCX_NO_COPY_CTORS(IErrorMap);
+    std::vector<error> _errors;
 };
 
 }   //namespace base

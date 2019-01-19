@@ -13,3 +13,12 @@ clean:
 	make -C thread  clean
 	make -C plugin  clean
 	make -C perf 	clean
+
+
+ut: all
+	make -C base  	ut
+	make -C thread  ut
+	make -C logger  ut
+	make -C other  	ut
+	make -C plugin  ut
+	make -C perf	ut

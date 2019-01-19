@@ -2,9 +2,8 @@
 #ifndef  JCX_BASE_HASHMAP_H
 #define  JCX_BASE_HASHMAP_H
 
-
 #include <unordered_map>
-
+#include <jcx/base/Macro.h>
 
 namespace jcx {
 namespace base {
@@ -13,6 +12,7 @@ namespace base {
 template<typename K, typename V>
 class IMap {
 public:
+    IMap(){}
     virtual ~IMap(){}
 
     virtual int insert(const K & k,  const V & v) = 0;
@@ -34,6 +34,8 @@ public:
     virtual V& get(const K & k) = 0;
     virtual bool set(const K & k, const V & v) = 0;
     virtual V& getRef(const K & k)  = 0 ;
+private:
+    JCX_NO_COPY_CTORS(IMap);
 };
 
 
@@ -93,6 +95,7 @@ public:
     }
 
 private:
+    JCX_NO_COPY_CTORS(HashMap);
     typedef typename std::unordered_map<K,V> HashMapImp;
     HashMapImp _imp;
 };

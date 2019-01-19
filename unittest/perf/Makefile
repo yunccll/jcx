@@ -28,3 +28,6 @@ clean:
 clean.log:
 	$(EO_CLEAN_LOG)	
 	$(DO_CLEAN_LOG)	
+
+ut:$(UT_TARGET_BIN)
+	./$(UT_TARGET_BIN)

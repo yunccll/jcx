@@ -2,8 +2,10 @@
 #define  JCX_BASE_THREAD_H
 
 #include <memory>
-#include <pthread.h>
+
+#include <jcx/base/Macro.h>
 #include <jcx/base/IRunnable.h>
+
 
 namespace jcx { 
 
@@ -13,6 +15,7 @@ namespace base {
 
 namespace thread { 
 
+class IThreadImp;
 
 class Thread : public base::IRunnable{
 private:
@@ -21,7 +24,8 @@ public:
     static std::shared_ptr<Thread> make(base::IRunnable * r);
     static std::shared_ptr<Thread> make(std::shared_ptr<base::IRunnable> spr);
 
-    Thread(base::IRunnable * r = 0);
+    Thread();
+    explicit Thread(base::IRunnable * r);
     ~Thread() override;
     void run() override;
 
@@ -41,9 +45,12 @@ public:
     static void usleep(unsigned int micro);
 
 private:
-    static void * ThreadEntry(void * ctx);
+    static void * __ThreadEntry(void * ctx);
+
 private:
-    pthread_t _thread;  //TODO: move to Imp;
+    JCX_NO_COPY_CTORS(Thread);
+    IThreadImp * _imp;
+    //pthread_t _thread;  //TODO: move to Imp;
     base::IRunnable * _runnable;
 };
 

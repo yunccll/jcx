@@ -1,6 +1,8 @@
 #ifndef  JCX_BASE_SINGLETON_H
 #define  JCX_BASE_SINGLETON_H
 
+#include <jcx/base/Macro.h>
+
 namespace jcx { 
 namespace base {
 
@@ -17,6 +19,7 @@ public:
     }
 
 private:
+    JCX_NO_COPY_CTORS(Singleton);
     struct create_obj {
         create_obj(){
             Singleton <T>::instance();

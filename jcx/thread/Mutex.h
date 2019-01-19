@@ -14,6 +14,8 @@ public:
     virtual void lock() = 0;
     virtual int tryLock() = 0;
     virtual void unlock() = 0;
+private:
+    JCX_NO_COPY_CTORS(Mutex);
 };
 
 Mutex * newMutex();
@@ -26,7 +28,8 @@ public:
     virtual void rlock() = 0;
     virtual void wlock() = 0;
     virtual void unlock() = 0;
-
+private:
+    JCX_NO_COPY_CTORS(RwMutex);
 };
 
 RwMutex * newRwMutex();
@@ -48,6 +51,7 @@ public:
     bool isLock() const { return _ret == 0; }
     int getRet() const  { return _ret; }
 private:
+    JCX_NO_DEFAULT_CTORS(ScopeTryLock);
     Mutex & _m;
     int _ret;
 };
@@ -62,6 +66,7 @@ public:
         _m.unlock(); 
     }
 private:
+    JCX_NO_DEFAULT_CTORS(ScopeLock);
     Mutex & _m;
 };
 
@@ -75,6 +80,7 @@ public:
         _rwm.unlock();
     }
 private:
+    JCX_NO_DEFAULT_CTORS(ScopeRlock);
     RwMutex & _rwm;
 };
 
@@ -88,6 +94,7 @@ public:
         _rwm.unlock();
     }
 private:
+    JCX_NO_DEFAULT_CTORS(ScopeWlock);
     RwMutex & _rwm;
 };
 

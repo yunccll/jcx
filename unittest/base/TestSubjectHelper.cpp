@@ -30,17 +30,12 @@ public:
 
 class TcpConnecter : public SubjectHelper::One<IConnection, TcpConnecter>{
 public:
-    TcpConnecter()
-    :SubjectHelper::One<IConnection, TcpConnecter>(NULL)
-    {
-    }
-
+    TcpConnecter() {}
     TcpConnecter(IConnection * listener)
     :SubjectHelper::One<IConnection, TcpConnecter>(listener)
     {
     }
-    virtual ~TcpConnecter(){
-    }
+    virtual ~TcpConnecter(){}
 
     int connected(int errcode){
         auto l = getListener();

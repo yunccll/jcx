@@ -10,7 +10,7 @@ PROJ_INC_PATHES	+= $(RAPIDJSON_INC_PATH)
 
 PROJ_LIB_PATHES 	+= $(PROJ_ROOT_SRC_PATH)/jcx/base
 
-PROJ_STATIC_LIBS 	+= jcx_base pthread
+PROJ_STATIC_LIBS 	+= pthread jcx_base
 
 UT_DEST_EXCLUDE_OBJS 	+= 
 CXX_OBJS  				+= $(UT_DEST_OBJS)
@@ -28,3 +28,6 @@ clean:
 clean.log:
 	$(EO_CLEAN_LOG)	
 	$(DO_CLEAN_LOG)	
+
+ut:$(UT_TARGET_BIN)
+	./$(UT_TARGET_BIN)

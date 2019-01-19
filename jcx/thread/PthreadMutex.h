@@ -1,6 +1,7 @@
 #ifndef  JCX_THREAD_PTHREADMUTEX_H
 #define  JCX_THREAD_PTHREADMUTEX_H
 
+#include <jcx/base/Macro.h>
 #include <jcx/thread/Mutex.h>
 #include <pthread.h>
 
@@ -16,6 +17,7 @@ public:
     virtual int tryLock();
     virtual void unlock();
 private:
+    JCX_NO_COPY_CTORS(PthreadMutex);
     pthread_mutex_t _mutex;
 };
 
@@ -29,6 +31,7 @@ public:
 
     virtual void unlock();
 private:
+    JCX_NO_COPY_CTORS(PthreadRwMutex);
     pthread_rwlock_t _rwmutex;
 };
 

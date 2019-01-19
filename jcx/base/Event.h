@@ -3,6 +3,7 @@
 #define  JCX_BASE_EVENT_H
 
 #include <string>
+#include <jcx/base/Macro.h>
 
 namespace jcx {
 namespace base {
@@ -22,6 +23,7 @@ public:
     void setArg(void * arg) { _arg = arg; }
 
 private:
+    JCX_NO_COPY_CTORS(Event);
     uint32_t  _id;
     void * _arg;
 };

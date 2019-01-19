@@ -3,6 +3,8 @@
 namespace jcx {
 namespace base {
 
+AbstractSubject::AbstractSubject(){
+}
 AbstractSubject::~AbstractSubject(){
 }
 

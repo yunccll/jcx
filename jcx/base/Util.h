@@ -31,7 +31,8 @@ public:
     static inline void printHex(const std::string & str){
         printHex(&str.front(),str.size());
     }
-
+private:
+    JCX_NO_COPY_CTORS(Util); 
 };
 
 //TODO: Move to File 
