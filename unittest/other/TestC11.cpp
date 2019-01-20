@@ -116,8 +116,60 @@ TEST(C11Test, rightRef){
     std::cout << str  <<std::endl;
 }
 
+class A {
+public:
+    A(int i, int j)
+    :_i(i), _j(j){
+    }
+    ~A(){}
+    int get(){
+        return _i + _j;
+    }
+private:
+    int _i;
+    int _j;
+};
+
+class B {
+public:
+    B(A * a)
+    :_a(a), _k(0)
+    {
+    }
+    B(A * a, int k)
+    :_a(a), _k(k)
+    {
+    }
+    int get(){
+        return _a->get() + _k;
+    }
+private:
+    A * _a;
+    int _k;
+};
 
 TEST(C11Test, initializer){
-    std::vector<int> vec = {11111, 11112, 11113, 11114};
-    for_each(begin(vec), end(vec), [](int i) {std::cout << i << std::endl;});
+    {
+        std::vector<int> vec = {11111, 11112, 11113, 11114};
+        for_each(begin(vec), end(vec), [](int i) {std::cout << i << std::endl;});
+    }
+
+    {
+        A a {1, 2};
+        ASSERT_TRUE( 3 == a.get());
+    }
+
+    {
+        B b { new A{1, 3}};
+        ASSERT_TRUE( 4 == b.get());
+    }
+
+    {
+        B b { new A{1, 3}, 4};
+        ASSERT_TRUE( 1+3+4 == b.get());
+    }
+    {
+        std::vector<A*> vec = {new A{1,2}, new A{2, 2}, new A{3, 2}};
+        for_each(begin(vec), end(vec), [](A* a) {std::cout << a->get() << std::endl;});
+    }
 }
