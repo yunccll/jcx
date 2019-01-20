@@ -115,3 +115,9 @@ TEST(C11Test, rightRef){
 
     std::cout << str  <<std::endl;
 }
+
+
+TEST(C11Test, initializer){
+    std::vector<int> vec = {11111, 11112, 11113, 11114};
+    for_each(begin(vec), end(vec), [](int i) {std::cout << i << std::endl;});
+}
