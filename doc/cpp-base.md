@@ -1,5 +1,7 @@
 CPP  base  training
 
+    目标：  编写模块化代码(高内聚，低耦合）--> OOP 被实践证明了模块化较好的方法之一
+
     C++ 发展了许多年，特别的臃肿。
     组成部分有： 语言特性; 面向对象; 泛型编程; 库(STL), 新增加的库和语法(C++11,C++1z)。
 
@@ -17,6 +19,11 @@ CPP  base  training
 
     书很多，除了用于入门的可以先看看，还是靠写码先多实践了再说。
 
+    google C++ 编码规范: https://zh-google-styleguide.readthedocs.io/en/latest/google-cpp-styleguide/contents/
+    大部分都可以遵守，小部分可能hold不住
+
+
+# Chapter I
 
 ## 与C的最大区别
 * base
@@ -34,7 +41,6 @@ CPP  base  training
 * non-standard library
     * 功能扩充 (boost)
     network, filesystem, datetime,
-
 
 ## elmentary
 
@@ -75,6 +81,7 @@ CPP  base  training
     ```
 
 * ptr & Ref 
+
 
     * base
 
@@ -299,7 +306,22 @@ CPP  base  training
     ```class Sub{
     };
     ```
+## Rule 
 
+    0. 最高规则:  
+        * 高可扩展性 >>  高可维护性  >> 高性能; 
+        * 使用C++而不是C的最重要目的是OOP
+
+    1. 优先使用指针, 担心hold不住ref(&),更加别说右值(&&)
+    2. 尽量不用模板实现一些功能，如果你还无法掌握模板
+    3. 禁止使用meta之类的复杂模板技术
+    4. 所有参数尽量使用const
+    TODO: 
+
+
+
+
+# Chapter II 
 
 ## STL  TODO:
 
@@ -310,6 +332,7 @@ CPP  base  training
 * algorithm
     std::find,  std::advance, .....
 * function
+
     
 
 ## DP Evolution TODO: 
@@ -323,4 +346,5 @@ CPP  base  training
     * if-everywhere
     * Status-transfer-table
     * Status
+
 
