@@ -10,7 +10,7 @@ AbstractSubject::~AbstractSubject(){
 
 int AbstractSubject::attach(IObserver * observer){
     if(observer){
-        _observers.push_back(observer);
+        _observers.insert(observer);
         return 0;
     }
     return -1;
@@ -25,9 +25,9 @@ int AbstractSubject::detach(IObserver * observer){
 
 int AbstractSubject::notify(const Event * event){
     if(event){
-        std::list<IObserver *>::iterator it = _observers.begin();
-        for(; it != _observers.end(); ++it){
-            (*it)->update(event);
+        auto it = _observers.iterator();
+        while(it.hasNext()){
+            it.next()->update(event);
         }
         return 0;
     }

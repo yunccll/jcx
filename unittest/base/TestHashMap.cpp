@@ -8,7 +8,6 @@ using namespace jcx;
 using namespace base;
 
 
-
 TEST(HashMap, test){
     auto  hash = new HashMap<int, int>();
     hash->insert(1, 1);
@@ -67,9 +66,10 @@ TEST(HashMap, test_ptr){
     ASSERT_TRUE(ptr1 == hash->get("hello"));
 }
 
-TEST(HashMap, interface){
+TEST(HashMap, toPtr){
     IMapForPtr<void>  * hash = new HashMapForPtr<void>();
     hash->insert("hello", NULL);
+    hash->insertOrReplace("hello1", NULL);
 
     if(hash->contains("hello")){
         ASSERT_TRUE(NULL == hash->getRef("hello"));
@@ -92,7 +92,8 @@ TEST(HashMap, interface){
     delete [] name;
 
     ASSERT_TRUE(hash->contains("chenglun"));
-    ASSERT_TRUE(NULL == hash->get("chenglun"));
+    const char * str = "chenglun";
+    ASSERT_TRUE(NULL == hash->get(str));
 
     delete hash;
 }

@@ -1,15 +1,14 @@
 include ../../mk/Makefile.root.include
 include ../../mk/Makefile.libs.include
 
+PROJ_CXXFLAGS 	+= 
+TARGET_LIB_NAME = jcx_plugin
 
-PROJ_CXXFLAGS 	+=  #cxx  compile flags
-TARGET_LIB_NAME = jcx_base
+PROJ_INC_PATHES 	+= $(PROJ_ROOT_SRC_PATH)
 
-PROJ_INC_PATHES 		+=   $(PROJ_ROOT_SRC_PATH)
-PROJ_LIB_PATHES 		+= 
-PROJ_LIB_FULL_NAMES 	+= 
+PROJ_LIB_PATHES 	+= $(PROJ_ROOT_SRC_PATH)/jcx/base 
 
-PROJ_STATIC_LIBS 	+=
+PROJ_STATIC_LIBS 	+= jcx_base
 
 
 all: $(TARGET_STATIC_LIB_BIN)

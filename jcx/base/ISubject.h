@@ -5,6 +5,7 @@
 #include <list>
 #include <jcx/base/Macro.h>
 #include <jcx/base/IObserver.h>
+#include <jcx/base/SimpleContainer.h>
 
 namespace jcx {
 namespace base {
@@ -36,8 +37,8 @@ public:
 
 private:
     JCX_NO_COPY_CTORS(AbstractSubject); 
-    typedef typename std::list<IObserver*> Container;
-    Container _observers;
+
+    SimpleVector<IObserver*> _observers;
 };
 
 }   //namespace base

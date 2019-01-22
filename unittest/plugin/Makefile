@@ -9,10 +9,9 @@ PROJ_INC_PATHES	+= $(RAPIDJSON_INC_PATH)
 
 
 PROJ_LIB_PATHES 	+= $(PROJ_ROOT_SRC_PATH)/jcx/plugin
-PROJ_LIB_PATHES 	+= $(PROJ_ROOT_SRC_PATH)/jcx/thread
-PROJ_LIB_PATHES 	+= $(PROJ_ROOT_SRC_PATH)/jcx/logger
+PROJ_LIB_PATHES 	+= $(PROJ_ROOT_SRC_PATH)/jcx/base
 
-PROJ_STATIC_LIBS 	+=  pthread jcx_thread jcx_logger
+PROJ_STATIC_LIBS 	+=  pthread jcx_plugin jcx_base
 
 UT_DEST_EXCLUDE_OBJS 	+= 
 CXX_OBJS  				+= $(UT_DEST_OBJS)

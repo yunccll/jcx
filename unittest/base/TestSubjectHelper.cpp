@@ -16,13 +16,13 @@ public:
 
 class TcpListener : public IConnection {
 public:
-    virtual ~TcpListener(){
+    ~TcpListener() override{
     }
-    int connected(int errcode){
+    int connected(int errcode) override{
         std::cout << "tcp listener connected" << std::endl;
         return 0;
     }
-    int disconnected(int errcode){
+    int disconnected(int errcode) override{
         std::cout << "tcp listener disconnected" << std::endl;
         return 0;
     }
@@ -87,7 +87,6 @@ public:
         auto it = iterator();
         while(it.hasNext()){
             it.next()->connected(errcode);
-            //it.next();
         }
         return 0;
     }
@@ -95,7 +94,6 @@ public:
         auto it = iterator();
         while(it.hasNext()){
             it.next()->disconnected(errcode);
-            //it.next();
         }
         return 0;
     }

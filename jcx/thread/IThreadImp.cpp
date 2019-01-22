@@ -39,8 +39,8 @@ public:
         return ::pthread_detach(_pthread);
     }
 
-    static int id(){
-        return (int)::pthread_self();
+    static unsigned long id(){
+        return (unsigned long)(::pthread_self());
     }
 
 private:

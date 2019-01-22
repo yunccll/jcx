@@ -4,6 +4,7 @@
 
 #include <unordered_map>
 #include <jcx/base/Macro.h>
+#include <utility>
 
 namespace jcx {
 namespace base {
@@ -101,9 +102,19 @@ private:
 };
 
 
-template<typename T> using HashMapForPtr = HashMap<std::string, T*>;
-template<typename T> using IMapForPtr = IMap<std::string, T*>;
+}   //namespace base
+}   //namespace jcx
 
+#include <string>
+
+namespace jcx {
+namespace base {
+
+template<typename T> 
+using HashMapForPtr = HashMap<std::string, T*>;
+
+template<typename T> 
+using IMapForPtr = IMap<std::string, T*>;
 }   //namespace base
 }   //namespace jcx
 

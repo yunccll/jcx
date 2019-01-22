@@ -1,8 +1,6 @@
 #include <iostream>
 #include <jcx/base/TestCaseHelper.h>
 
-using namespace std;
-
 namespace jcx { 
 namespace base {
 
@@ -15,7 +13,7 @@ _Base::~_Base(){
     std::cout << "destructor of _Base, id:" << _id << std::endl;
 }
 bool _Base::operator == (const _Base & right) const{
-    cout << "_Base:" << __func__ << endl;
+    std::cout << "_Base:" << __func__ << std::endl;
     return right._id == _id;
 }
 
