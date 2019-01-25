@@ -1,21 +1,20 @@
 
-#ifndef  JCX_PLUGIN_PLUGINMANAGER_H
-#define  JCX_PLUGIN_PLUGINMANAGER_H
+#ifndef  JCX_PLUGIN_PLUGINCONTAINER_H
+#define  JCX_PLUGIN_PLUGINCONTAINER_H
 
-#include <jcx/base/Singleton.h>
+
 #include <jcx/base/HashMap.h>
 #include <jcx/plugin/IPluginable.h>
 
 namespace jcx { 
 namespace plugin {
 
-class PluginManager : public jcx::base::Singleton<PluginManager> {
+class PluginContainer final {
 public:
-    PluginManager();
-    ~PluginManager() override ;
+    PluginContainer();
+    ~PluginContainer();
 
     IPluginable * find(const char * name);
-    IPluginable & findRef(const char * name);
 
     int add(const char * name, IPluginable * plugin);
     void remove(const char * name);
@@ -27,4 +26,4 @@ private:
 } //namespace plugin
 } //namespace jcx
 
-#endif   /* PLUGINMANAGER_H */
+#endif   /* JCX_PLUGIN_PLUGINCONTAINER_H */

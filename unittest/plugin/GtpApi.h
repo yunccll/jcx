@@ -11,20 +11,9 @@ public:
     //after send msg
     virtual int send(int errCode, const char * data, int len) = 0;
     //after recv msg
-    virtual int recv(int errCode, const char * data, int len) = 0;
+    virtual int recv(int errCode, char * data, const int len) = 0;
 };
 
-class IConnectionListener {
-public:
-    virtual ~IConnectionListener(){
-    }
-
-    virtual void beforeConnect(int errCode) = 0;
-    virtual void connected(int errCode) = 0;
-
-    virtual void beforeDisconnect(int errCode) = 0;
-    virtual void disconnected(int errCode) = 0;
-};
 
 
 #include <jcx/base/SubjectHelper.h>
@@ -36,11 +25,53 @@ public:
             it.next()->send(errCode, msg, len);
         }
     }
+    void notifyRecv(int errCode, char * msg, const int len){
+        auto it = iterator();
+        while(it.hasNext()){
+            it.next()->recv(errCode, msg, len);
+        }
+    }
 };
 
+class IConnectionListener {
+public:
+    virtual ~IConnectionListener(){
+    }
+
+    virtual void beforeConnect(const char * ip, const int port) = 0;
+    virtual void connected(int errCode, const char * ip, const int port) = 0;
+
+    virtual void beforeDisconnect(const char * ip, const int port) = 0;
+    virtual void disconnected(int errCode, const char * ip, const int port) = 0;
+};
 class ConnectionSubject : public jcx::base::SubjectHelper::Many<IConnectionListener, ConnectionSubject> {
 public:
-    //TODO: 
+
+    void notifyBeforeConnect(const char * ip, const int port){
+        auto it = iterator();
+        while(it.hasNext()){
+            it.next()->beforeConnect(ip, port);
+        }
+    }
+    void notifyConnected(int errCode, const char * ip, const int port){
+        auto it = iterator();
+        while(it.hasNext()){
+            it.next()->connected(errCode, ip, port);
+        }
+    }
+
+    void notifyBeforeDisconnect(const char * ip, const int port){
+        auto it = iterator();
+        while(it.hasNext()){
+            it.next()->beforeDisconnect(ip, port);
+        }
+    }
+    void notifyDisconnected(int errCode, const char * ip, const int port){
+        auto it = iterator();
+        while(it.hasNext()){
+            it.next()->disconnected(errCode, ip, port);
+        }
+    }
 };
 
 
@@ -58,7 +89,7 @@ public:
 
     virtual int start() = 0;
     virtual void stop() = 0;
-
+    virtual int recv(char * data, const int capacity) = 0;
 };
 
 class AbstractApi : public IApi {
@@ -70,20 +101,28 @@ public:
 
     int send(const char * msg, int len) override{
         int ret = sendImp(msg, len);
-
         _msgSubject.notifySend(ret, msg, len);
+        return ret;
+    }
+
+    int recv(char * msg, const int capacity) override {
+        int ret = recvImp(msg, capacity);
+        _msgSubject.notifyRecv(ret, msg, capacity); 
         return ret;
     }
 
     MessageSubject & messageSubject() override {
         return _msgSubject;
     }
+
+    //TODO: connected, disconnected,.....
     ConnectionSubject & connectionSubject() override {
         return _connSubject;
     }
 
 protected:
     virtual int sendImp(const char * msg, int len) = 0;
+    virtual int recvImp(char * msg, const int capacity) = 0;
 
 protected:
     MessageSubject _msgSubject;
@@ -104,6 +143,9 @@ public:
     }
 
     int sendImp(const char * msg, int len) override {
+        return 0;
+    }
+    int recvImp(char * msg, const int capacity) override {
         return 0;
     }
 };

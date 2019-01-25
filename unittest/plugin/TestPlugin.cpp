@@ -3,16 +3,42 @@
 #include "GtpApi.h"
 
 #include <jcx/base/Builder.h>
-#include <jcx/plugin/PluginManager.h>
+#include <jcx/plugin/PluginContainer.h>
+#include <jcx/base/Singleton.h>
 
 
+class AppConfig : public jcx::base::Singleton<AppConfig>{
+public:
+    ~AppConfig() override {
+        freePlugins();
+    }
+
+    jcx::plugin::IPluginable * api(){
+        return new GtpApi();
+    }
+    auto loadPlugins(){
+        _plugins.add("api", api());
+        return &_plugins; 
+    }
+
+    auto plugins(){
+        return &_plugins;
+    }
+
+private:
+    void freePlugins(){
+        //TODO: Iterator -->From HashMap ????
+    }
+private:
+    jcx::plugin::PluginContainer _plugins;
+};
 
 TEST(PluginTest, api){
-    auto gtpapi = jcx::base::BuilderSptr<GtpApi>::make();
-    jcx::plugin::PluginManager::instance()->add("api", gtpapi.get());
+
+    AppConfig::instance()->loadPlugins();
 
     //use 
-    IApi* api = jcx::plugin::PluginManager::instance()->find("api")->as<IApi>();
+    IApi* api = AppConfig::instance()->plugins()->find("api")->as<IApi>();
     ASSERT_TRUE(api != NULL);
 
     api->messageSubject().attach(NULL);
