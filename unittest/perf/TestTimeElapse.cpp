@@ -4,11 +4,10 @@
 #include <sstream>
 #include <jcx/base/DateTime.h>
 #include <jcx/base/HashMap.h>
+#include <jcx/base/SimpleContainer.h>
 
 
 #include <chrono>
-
-using namespace std;
 
 class IElapseRecorder {
 public:
@@ -17,7 +16,7 @@ public:
     virtual int blockIn(const std::string & name) = 0;
     virtual int blockOut(const std::string & name) = 0;
 
-    virtual std::string toString() const  = 0;
+    virtual std::string toString()  = 0;
 
     double seconds() const {
         return us()/(1000000.0);
@@ -48,8 +47,8 @@ public:
         return _us;
     }
 
-    std::string toString() const override {
-        ostringstream oss; 
+    std::string toString() override {
+        std::ostringstream oss; 
         oss << "sp:"<< us() << "us";
         return oss.str();
     }
@@ -84,8 +83,8 @@ public:
         }
         return -1;
     }
-    std::string toString() const override {
-        ostringstream oss; 
+    std::string toString() override {
+        std::ostringstream oss; 
         oss << "c:" << (_recorded == false ? 0 : 1) << "," << AbstractElapseRecorder::toString() ;
         return oss.str();
     }
@@ -109,8 +108,8 @@ public:
         return AbstractElapseRecorder::blockOut(name) ;
     }
     
-    std::string toString() const override {
-        ostringstream oss; 
+    std::string toString() override {
+        std::ostringstream oss; 
         oss << "c:" << _rounds << "," << AbstractElapseRecorder::toString() ;
         return oss.str();
     }
@@ -127,6 +126,7 @@ class MultiShotRecorder : public AbstractElapseRecorder {
 public:
     MultiShotRecorder()
     :AbstractElapseRecorder()
+    ,_us(0)
     {
     }
     ~MultiShotRecorder() override 
@@ -135,27 +135,51 @@ public:
     }
 
     int blockIn(const std::string & name) override {
-        //TODO:  insert or replace  MultiRoundElapseRecorder
+        if(_multiCodeBlock.contains(name)){
+            return _multiCodeBlock.get(name)->blockIn(name);
+        }
+
         IElapseRecorder * er = new MultiRoundElapseRecorder();
-        er->blockIn(name);
-        return 0;
-        
-    }
-    int blockOut(const std::string & name) override {
-        //TODO: insert or failed RoundRecorder
-        IElapseRecorder * er = new MultiRoundElapseRecorder();
-        er->blockOut(name);
-        //TODO: total elapse -->>>>
-        return 0;
+        if(er != NULL){
+            _multiCodeBlock.insert(name, er);
+            _codeBlockIndex.insert(er);
+            return er->blockIn(name);
+        }
+        return -1;
     }
 
-    std::string toString() const override {
-        ostringstream oss;
-        oss << "MultiShotRecorder";
+    int blockOut(const std::string & name) override {
+        if(_multiCodeBlock.contains(name)){
+            auto er =  _multiCodeBlock.get(name);
+            er->blockOut(name);
+            _us += er->us();
+            return 0;
+        }
+        return -1;
+    }
+
+    unsigned long long us() const override {
+        return _us;
+    }
+
+    std::string toString() override {
+        std::ostringstream oss;
+        oss << "total_span:" << us() << "->[";
+
+        //TODO: need name
+        auto it = _codeBlockIndex.iterator();
+        while(it.hasNext()){
+            auto & v = it.next();
+            oss << v->toString()  << ",";
+        }
+        oss << "]";
         return oss.str();
     }
+
 private:    
-    jcx::base::HashMapForPtr<IElapseRecorder> multiCodeBlock;
+    jcx::base::HashMapForPtr<IElapseRecorder> _multiCodeBlock;
+    jcx::base::SimpleVector<IElapseRecorder*> _codeBlockIndex;
+    unsigned long long _us;
 };
 
 
@@ -211,20 +235,20 @@ TEST(TimeElapseTest, MultiRoundElapseRecorder){
 }
 
 TEST(TimeElapseTest, MultiShotRecorder){
-    MultiShotRecorder er ; 
+    MultiShotRecorder recorder ; 
     {
-        CodeBlock cb(er, "name1");
+        CodeBlock cb(recorder, "name1");
         for( int i = 0; i < 10 ;  ++i){
             {
-                CodeBlock cb(er, "loop_i");
+                CodeBlock cb(recorder, "loop_i");
                 usleep(3000);//3ms
 
                 for( int j = 0 ; j < 22; ++j){
-                    CodeBlock jloop(er, "loop_j");
+                    CodeBlock jloop(recorder, "loop_j");
                     usleep(1000); //1ms
                 }
             }
         }
     }
-    std::cout << er.toString() << std::endl;
+    std::cout << recorder.toString() << std::endl;
 }

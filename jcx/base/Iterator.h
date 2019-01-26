@@ -54,7 +54,7 @@ public:
     virtual ~Iterator(){
     }
 
-    bool hasNext() {
+    bool hasNext() const{
         return _it != _end;
     }
     
