@@ -2,6 +2,7 @@
 #ifndef  JCX_BASE_SIMPLECONTAINER_H
 #define  JCX_BASE_SIMPLECONTAINER_H
 
+#include <algorithm>
 #include <jcx/base/Iterator.h>
 
 namespace jcx {

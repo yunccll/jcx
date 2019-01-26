@@ -4,9 +4,14 @@
 
 #include <jcx/base/Macro.h>
 
+
+
 namespace jcx {
 namespace base {
 
+/*  
+ *  Deprecated
+ *  */
 template<typename R>
 struct Caller{
     typedef R (*f_t)(void);

@@ -5,6 +5,7 @@
 
 #include <jcx/base/HashMap.h>
 #include <jcx/plugin/IPluginable.h>
+#include <jcx/base/Iterator.h>
 
 namespace jcx { 
 namespace plugin {
@@ -18,6 +19,11 @@ public:
 
     int add(const char * name, IPluginable * plugin);
     void remove(const char * name);
+
+    auto iterator(){
+        //return jcx::base::Iterator<typename jcx::base::HashMapForPtr<IPluginable>>(_plugins);
+        return jcx::base::Iterator<typename jcx::base::HashMapForPtr<IPluginable>>(_plugins);
+    }
 
 private:
     jcx::base::HashMapForPtr<IPluginable> _plugins;
