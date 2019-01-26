@@ -34,54 +34,69 @@ public:
     typedef IDurable<60> Minute;
     typedef IDurable<1> Second;
 
-private:
+public:
     DateTime();
     explicit DateTime(time_t dt);
-public:
+    DateTime(const DateTime & dt);
     ~DateTime();
 
-    static std::shared_ptr<DateTime> now();
-    static std::shared_ptr<DateTime> make();
-    static std::shared_ptr<DateTime> make(time_t dt);
-    static std::shared_ptr<DateTime> make(const DateTime & dt);
+    static const DateTime now(){
+        time_t t= std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+        return DateTime(t);
+    }
+    static std::shared_ptr<DateTime> make(){
+        return std::shared_ptr<DateTime>(new DateTime(0));
+    }
+
+    static std::shared_ptr<DateTime> make(time_t dt){
+        return std::shared_ptr<DateTime>(new DateTime(dt));
+    }
+    static std::shared_ptr<DateTime> make(const DateTime & dt){
+        return std::shared_ptr<DateTime>(new DateTime(dt));
+    }
 
     //string convert
     static std::shared_ptr<DateTime> from(const char * strDateTime, const char * fmt="%Y-%m-%d %H:%M:%S");
     const char * str(char * buffer, int cap) const;
     std::shared_ptr<char> str() const;
 
+    DateTime & operator = (const DateTime & right) {
+        _dt = right._dt;
+        return *this;
+    }
+
     // operators   == != , + , - , += , -=
-    inline bool operator == (const DateTime & right){
+    bool operator == (const DateTime & right) const{
         return this == &right || right._dt == _dt;
     }
-    inline bool operator != (const DateTime & right){
+    bool operator != (const DateTime & right) const{
         return !(*this).operator ==(right);
     }
 
     template<typename IDurable>
-    const DateTime operator +(const IDurable & t){
+    const DateTime operator +(const IDurable & t) const{
         DateTime dt(*this);
         dt += t;
         return dt;
     }
     template<typename IDurable>
-    const DateTime operator -(const IDurable & t){
+    const DateTime operator -(const IDurable & t) const{
         DateTime dt(*this);
         dt -= t;
         return dt;
     }
-    const unsigned long long operator -(const DateTime & dt){
+    const unsigned long long operator -(const DateTime & dt) const{
         return _dt - dt._dt;
     }
 
     template<typename IDurable>
-    DateTime& operator += (const IDurable & t){
+    const DateTime& operator += (const IDurable & t){
         _dt += t.seconds();
         if(_dt <= 0) _dt = 0;
         return *this;
     }
     template<typename IDurable>
-    DateTime & operator -= (const IDurable & t){
+    const DateTime & operator -= (const IDurable & t){
         _dt -= t.seconds();
         if(_dt <=0) _dt = 0;
         return *this;
@@ -105,12 +120,12 @@ const DateTime operator -(const IDurable & t, const DateTime & right){
 }
 
 template<typename IDurable>
-DateTime& operator += (const IDurable & t, DateTime & left){
+const DateTime& operator += (const IDurable & t, DateTime & left){
     left += t;
     return left;
 }
 template<typename IDurable>
-DateTime & operator -= (const IDurable & t, DateTime & left){
+const DateTime & operator -= (const IDurable & t, DateTime & left){
     left -= t;
     return left;
 }

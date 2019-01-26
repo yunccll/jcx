@@ -6,20 +6,6 @@
 namespace jcx {
 namespace base {
 
-
-std::shared_ptr<DateTime> DateTime::now(){
-    time_t t= std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
-    return std::shared_ptr<DateTime>(new DateTime(t));
-}
-std::shared_ptr<DateTime> DateTime::make(){
-    return std::shared_ptr<DateTime>(new DateTime);
-}
-std::shared_ptr<DateTime> DateTime::make(time_t dt){
-    return std::shared_ptr<DateTime>(new DateTime(dt));
-}
-std::shared_ptr<DateTime> DateTime::make(const DateTime & dt){
-    return std::shared_ptr<DateTime>(new DateTime(dt));
-}
 std::shared_ptr<DateTime> DateTime::from(const char * strDateTime, const char * fmt){
     if(strDateTime != 0 && fmt != 0){
         struct tm time_tmp = {0};
@@ -36,7 +22,13 @@ std::shared_ptr<DateTime> DateTime::from(const char * strDateTime, const char * 
 DateTime::DateTime(){
     _dt = 0;
 }
-DateTime::DateTime(time_t dt):_dt(dt){
+DateTime::DateTime(time_t dt)
+:_dt(dt)
+{
+}
+DateTime::DateTime(const DateTime & dt)
+:_dt(dt._dt)
+{
 }
 DateTime::~DateTime(){
 }
