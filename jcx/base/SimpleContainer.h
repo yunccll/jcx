@@ -60,7 +60,6 @@ public:
     jcx::base::Iterator<Container> iterator(){
         return jcx::base::Iterator<Container>(_container.begin(), _container.end());
     }
-    //TODO: constIterator????
         
 private:
     Container _container;

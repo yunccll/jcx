@@ -11,7 +11,7 @@ PROJ_INC_PATHES	+= $(RAPIDJSON_INC_PATH)
 PROJ_LIB_PATHES 	+= $(PROJ_ROOT_SRC_PATH)/jcx/perf
 PROJ_LIB_PATHES 	+= $(PROJ_ROOT_SRC_PATH)/jcx/base
 
-PROJ_STATIC_LIBS 	+=  pthread jcx_base
+PROJ_STATIC_LIBS 	+=  pthread jcx_perf jcx_base 
 
 UT_DEST_EXCLUDE_OBJS 	+= 
 CXX_OBJS  				+= $(UT_DEST_OBJS)
