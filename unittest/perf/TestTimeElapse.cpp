@@ -2,6 +2,13 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include <sys/time.h>
+#include <unistd.h>
+#include <unordered_map>
+#include <parallel_hashmap/phmap.h>
+using phmap::flat_hash_map;
+using phmap::parallel_flat_hash_map;
+
 
 using namespace std;
 
@@ -35,11 +42,7 @@ private:
 };
 
 
-
-
-
 TEST(TimeElapseTest, use){
-
     {
         TimeElapse te;
 
@@ -54,5 +57,44 @@ TEST(TimeElapseTest, use){
         std::cout << te.toString() << std::endl;
 
     }
+}
+TEST(TimeElapseTest, flat_hash_map){
+    typedef flat_hash_map<std::string, int> HashMap;
+    //typedef parallel_flat_hash_map<std::string, int> HashMap;
+    HashMap map;
+
+    struct  timeval start;
+    gettimeofday(&start,NULL);
+
+    int max = 2000*1000;
+    for(int i = 0; i < max; ++i){
+        map[to_string(i)] = i;
+        //map.insert(HashMap::value_type(buf, i));
+    }
+
+    struct  timeval end;
+    gettimeofday(&end,NULL);
+    unsigned  long diff = 1000000 * (end.tv_sec-start.tv_sec)+ end.tv_usec-start.tv_usec;
+    printf("diff: %fms, tps:%fM\n",diff/1000.0, 1.0*max/diff);
+}
+
+TEST(TimeElapseTest, stl_hash_map){
+    typedef std::unordered_map<std::string, int> hashmap;
+    hashmap map;
+
+    struct  timeval start;
+    gettimeofday(&start,NULL);
+
+    int max = 2000*1000;
+    for(int i = 0; i < max; ++i){
+        //map.insert(hashmap::value_type(buf, i));
+        map[to_string(i)]=i;
+        //map.find(std::string("hello") + std::to_string(i));
+    }
+
+    struct  timeval end;
+    gettimeofday(&end,NULL);
+    unsigned  long diff = 1000000 * (end.tv_sec-start.tv_sec)+ end.tv_usec-start.tv_usec;
+    printf("diff: %fms, tps:%fM\n",diff/1000.0, 1.0*max/diff);
 }
 

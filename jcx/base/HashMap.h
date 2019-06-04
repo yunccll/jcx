@@ -95,6 +95,30 @@ public:
         return _imp[k];
     }
 
+    int visit(std::function<bool (const K &, const V &)> func){
+    }
+
+    template<typename Container>
+    class Iterator {
+    public: 
+        Iterator(Container & container)
+        :_container(container){
+        }
+        ~Iterator(){}
+
+        bool hasNext(){
+            //TODO: 
+        }
+        Container::value_type & next(){
+            //TODO: 
+        }
+    private:
+        Container & _container;
+    };
+    Iterator<HashMapImp> iterator(){
+        return Iterator<HashMapImp>(_imp);
+    }
+
 private:
     JCX_NO_COPY_CTORS(HashMap);
     typedef typename std::unordered_map<K,V> HashMapImp;
