@@ -1,6 +1,7 @@
 #include "gtest/gtest.h"
 #include <iostream>
 
+#include <functional>
 #include <jcx/base/Caller.h>
 
 using namespace jcx;
@@ -103,6 +104,60 @@ TEST(CallerTest, use){
     }
     {
         Caller<int (int, int, int, int)> func(&FunctorTest::f4);
+        func(1, 2, 3, 4);
+    }
+}
+
+
+TEST(StdFunctionTest, use){
+    {
+        std::function<void ()> func(&FunctorTest::f0);
+        func();
+    }
+
+
+    {
+        std::function<int (int)> func(&FunctorTest::f1);
+        func(1);
+        int a = 1;
+        func(a);
+
+    }
+    {
+        std::function<int (int&)> func(&FunctorTest::f1_1);
+        // func(1); // ERROR : const A1 &
+        int a = 2;
+        func(a);
+    }
+    {
+        std::function<int (const int&)> func(&FunctorTest::f1_2);
+        func(1);
+    }
+    {
+        std::function<void (int *)> func(&FunctorTest::f1_ptr);
+        int a = 3;
+        int * p = &a;
+        func(p);
+    }
+    {
+        std::function<void (const int *)> func(&FunctorTest::f1_const_ptr);
+        int a = 4;
+        const int * cp = &a;
+        func(cp);
+    }
+
+
+
+    {
+        std::function<int (int,int)> func(&FunctorTest::f2);
+        func(1,2);
+    }
+    {
+        std::function<int (int, int, int)> func(&FunctorTest::f3);
+        func(1, 2, 3);
+    }
+    {
+        std::function<int (int, int, int, int)> func(&FunctorTest::f4);
         func(1, 2, 3, 4);
     }
 }

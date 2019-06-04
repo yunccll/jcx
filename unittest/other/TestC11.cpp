@@ -172,4 +172,15 @@ TEST(C11Test, initializer){
         std::vector<A*> vec = {new A{1,2}, new A{2, 2}, new A{3, 2}};
         for_each(begin(vec), end(vec), [](A* a) {std::cout << a->get() << std::endl;});
     }
+    //TOOD: map
+}
+
+
+int f(int * a){
+    return ++ (*a);
+}
+TEST(C11Test, functional){
+    std::function<int (int *)> pf(f);
+    int arg = 100;
+    ASSERT_TRUE(101 == f(&arg));
 }

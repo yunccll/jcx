@@ -29,3 +29,20 @@ TEST(CppTest, const_int_ptr){
     int * ca = &a;
     vec.push_back(ca);
 }
+
+
+const int createInt(){
+    return int(1);
+}
+
+class A {
+public:
+};
+
+const A createA(){
+    return A();
+}
+
+TEST(CppTest, createConst){
+    ASSERT_TRUE(createInt() == 1);
+}

@@ -36,11 +36,16 @@ namespace base {
  *              Iterator & operator ++(); //OK
  *              typename Container::value_type & operator *(); //OK
  *          };
- *      }
+ :*      }
  */
 template<typename C>
 class Iterator {
 public:
+    explicit Iterator(C & container)
+    : _it(container.begin())
+    , _end(container.end())
+    {
+    }
     Iterator(const typename C::iterator & begin, const typename C::iterator & end)
     : _it(begin)
     , _end(end)
@@ -49,12 +54,12 @@ public:
     virtual ~Iterator(){
     }
 
-    bool hasNext() {
+    bool hasNext() const{
         return _it != _end;
     }
     
-    typename C::value_type next(){
-        typename C::value_type  v = *_it;
+    typename C::value_type & next(){
+        typename C::value_type & v = *_it;
         ++_it;
         return v;
     }

@@ -44,6 +44,10 @@ private:
 template<typename K, typename V>
 class HashMap :  public IMap<K, V>{
 public:
+    typedef typename std::unordered_map<K,V> HashMapImp;
+    typedef typename HashMapImp::iterator iterator;
+    typedef typename HashMapImp::value_type value_type;
+
     HashMap(){}
     ~HashMap() override {}
 
@@ -95,33 +99,15 @@ public:
         return _imp[k];
     }
 
-    int visit(std::function<bool (const K &, const V &)> func){
+    iterator begin(){
+        return _imp.begin();
     }
-
-    template<typename Container>
-    class Iterator {
-    public: 
-        Iterator(Container & container)
-        :_container(container){
-        }
-        ~Iterator(){}
-
-        bool hasNext(){
-            //TODO: 
-        }
-        Container::value_type & next(){
-            //TODO: 
-        }
-    private:
-        Container & _container;
-    };
-    Iterator<HashMapImp> iterator(){
-        return Iterator<HashMapImp>(_imp);
+    iterator end(){
+        return _imp.end();
     }
 
 private:
     JCX_NO_COPY_CTORS(HashMap);
-    typedef typename std::unordered_map<K,V> HashMapImp;
     HashMapImp _imp;
 };
 

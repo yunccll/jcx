@@ -2,6 +2,7 @@
 #ifndef  JCX_BASE_SIMPLECONTAINER_H
 #define  JCX_BASE_SIMPLECONTAINER_H
 
+#include <algorithm>
 #include <jcx/base/Iterator.h>
 
 namespace jcx {
@@ -56,7 +57,7 @@ public:
     }*/
 
     //typedef typename jcx::base::Iterator<Container> iterator;
-    jcx::base::Iterator<Container> iterator() {
+    jcx::base::Iterator<Container> iterator(){
         return jcx::base::Iterator<Container>(_container.begin(), _container.end());
     }
         
