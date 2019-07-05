@@ -40,3 +40,33 @@ LEVELDB_HOME_PATH	:= $(PROJ_ROOT_SRC_PATH)/third/leveldb
 LEVELDB_INC_PATH	:= $(LEVELDB_HOME_PATH)/include
 LEVELDB_LIB_PATH	:= $(LEVELDB_HOME_PATH)/lib
 LEVELDB_LIB_NAME	:= leveldb
+
+#-- boost home
+BOOST_HOME_PATH		:= $(PROJ_ROOT_SRC_PATH)/../third/boost_1_70_0
+
+#-- boost-log
+BOOST_LOG_HOME_PATH	:= $(BOOST_HOME_PATH)
+BOOST_LOG_INC_PATH	:= $(BOOST_LOG_HOME_PATH)
+BOOST_LOG_LIB_PATH	:= $(BOOST_LOG_HOME_PATH)/bin.v2/libs/log/build/gcc-7.4.0/release/link-static/threadapi-pthread/threading-multi/visibility-hidden
+BOOST_LOG_LIB_NAME	:= boost_log_setup boost_log
+
+
+#-- boost-thread
+BOOST_THREAD_HOME_PATH	:= $(BOOST_HOME_PATH)
+BOOST_THREAD_INC_PATH	:= $(BOOST_THREAD_HOME_PATH)
+BOOST_THREAD_LIB_PATH	:= $(BOOST_THREAD_HOME_PATH)/bin.v2/libs/thread/build/gcc-7.4.0/release/link-static/threadapi-pthread/threading-multi/visibility-hidden
+BOOST_THREAD_LIB_NAME	:= boost_thread
+
+#-- boost-system
+BOOST_FS_HOME_PATH	:= $(BOOST_HOME_PATH)
+BOOST_FS_INC_PATH	:= $(BOOST_FS_HOME_PATH)
+BOOST_FS_LIB_PATH	:= $(BOOST_FS_HOME_PATH)/bin.v2/libs/filesystem/build/gcc-7.4.0/release/link-static/threading-multi/visibility-hidden
+BOOST_FS_LIB_NAME	:= boost_filesystem
+
+#-- boost-date_time
+BOOST_DATE_TIME_HOME_PATH	:= $(BOOST_HOME_PATH)
+BOOST_DATE_TIME_INC_PATH	:= $(BOOST_DATE_TIME_HOME_PATH)
+BOOST_DATE_TIME_LIB_PATH	:= $(BOOST_DATE_TIME_HOME_PATH)/bin.v2/libs/date_time/build/gcc-7.4.0/release/link-static/threading-multi/visibility-hidden
+BOOST_DATE_TIME_LIB_NAME	:= boost_date_time
+
+

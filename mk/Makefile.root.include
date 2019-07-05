@@ -57,8 +57,8 @@ TARGET_DYNAMIC_LIB_BIN =lib$(TARGET_LIB_NAME).so
 
 #-- unittest related variable
 UT_TARGET_BIN 	= main.ut.bin
-UT_DEST_ALL_OBJS = $(patsubst %.cpp,%.o, $(wildcard ../*.cpp)) \
-				   $(patsubst %.c,%.o, $(wildcard ../*.c))
+UT_DEST_ALL_OBJS = $(patsubst %.cpp,%.o, $(wildcard *.cpp)) \
+				   $(patsubst %.c,%.o, $(wildcard *.c))
 UT_DEST_OBJS 	= $(filter-out $(UT_DEST_EXCLUDE_OBJS), $(UT_DEST_ALL_OBJS)) 
 UT_DEST_EXCLUDE_OBJS := 
 
