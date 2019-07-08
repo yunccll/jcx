@@ -37,7 +37,7 @@ $(UT_TARGET_BIN): $(UT_DEST_OBJS)
 	$(EO_CPP_TARGET)
 	$(DO_CPP_TARGET)
 
-clean:
+clean: clean.log
 	$(EO_UT_CLEAN)
 	$(DO_UT_CLEAN)
 
